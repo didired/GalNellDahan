@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.typekit.net/jxq8zsy.css">
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+    <title>Modular Grid Page</title>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <img src="Gal_Nell_Dahan_Preloader.svg" alt="Gal Nell Dahan Logo" id="preloader-logo">
+    </div>
+
+    <!-- Header with buttons and hamburger menu -->
+    <div id="header">
+        <!-- Hamburger menu icon -->
+        <button id="hamburger-menu" class="hamburger">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+        </button>
+
+        <div id="nav-buttons">
+            <button id="about-button" class="nav-button">About</button>
+            <a href="https://www.instagram.com/galnelldahan" target="_blank">
+                <button id="instagram-button" class="nav-button">Instagram</button>
+            </a>
+            <a href="mailto:info@galnelldahan.com">
+                <button id="contact-button" class="nav-button">Contact</button>
+            </a>
+        </div>
+        
+        <div class="logo-container">
+            <img id="logo" src="Gal_Nell_Dahan_black.svg" alt="Logo">
+        </div>
+    </div>
+
+    <!-- Hamburger menu container for nav buttons -->
+    <div id="hamburger-container" class="hamburger-container">
+        <button id="about-button-mobile" class="nav-button mobile-button">About</button>
+        <a href="https://www.instagram.com/galnelldahan" target="_blank">
+            <button id="instagram-button-mobile" class="nav-button mobile-button">Instagram</button>
+        </a>
+        <a href="mailto:info@galnelldahan.com">
+            <button id="contact-button-mobile" class="nav-button mobile-button">Contact</button>
+        </a>
+    </div>
+
+    <!-- Hero container aligned to the second gridline -->
+    <div class="hero-container">
+        <h1 id="hero-header">Autumn / Winter 25'</h1>
+        <p1 id="hero-paragraph">The A/W 2025 debut collection will be unveiled this upcoming January. Drawing inspiration from the art of subtle transformation, merging takeoffs on classic silhouettes with modern subtleties and refined craftsmanship. Designed for the seekers of individuality within understated elegance, each piece invites a closer inspection of the details that defines it.</p1>
+    </div>
+
+    <div id="canvas-container"></div>
+    <script src="sketch.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
