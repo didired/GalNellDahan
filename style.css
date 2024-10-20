@@ -1,25 +1,25 @@
 @font-face {
   font-family: "SilvanaTextTrial-Medium";
   font-weight: 500;
-  src: url("fonts/SilvanaTextTrial-Medium.woff2") format("woff2");
+  src: url("Fonts/SilvanaTextTrial-Medium.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "SilvanaTextTrial-Bold";
   font-weight: 700;
-  src: url("fonts/SilvanaTextTrial-Bold.woff2") format("woff2");
+  src: url("Fonts/SilvanaTextTrial-Bold.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "SilvanaTextTrial-Regular";
   font-weight: 400;
-  src: url("fonts/SilvanaTextTrial-Regular.woff2") format("woff2");
+  src: url("Fonts/SilvanaTextTrial-Regular.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "SilvanaTextTrial-Light";
   font-weight: 200;
-  src: url("fonts/SilvanaTextTrial-Light.woff2") format("woff2");
+  src: url("Fonts/SilvanaTextTrial-Light.woff2") format("woff2");
 }
 
 /* General styles */
