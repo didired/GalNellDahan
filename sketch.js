@@ -3,6 +3,7 @@ let numRows = 10;
 let gridSizeX;
 let gridSizeY;
 const minCols = 7;
+const minRows = 5;
 const minGridSize = 70;
 const maxGridSize = 100;
 const BREAKPOINT = 768;
@@ -10,7 +11,7 @@ let noiseScale = 0.003;
 let time = 0;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, document.documentElement.scrollHeight);
   adjustGridSize();
   adjustLogoSize();
   adjustButtonPositions();
@@ -24,13 +25,27 @@ function setup() {
     preloader.classList.add('fade-out');
   }, 500); 
   
-  // After 3 seconds (1 second for fade-out), completely hide the preloader
+  // After 1 second, completely hide the preloader
   setTimeout(() => {
-    preloader.classList.add('hidden'); // Ensure it is removed after fade-out
-  }, 1000); // Total 3 seconds: 2s delay + 1s fade-out
+    preloader.classList.add('hidden');
+  }, 1000);
+
+  // Observer to detect content changes
+  const observer = new MutationObserver(() => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        resizeCanvas(windowWidth, document.documentElement.scrollHeight);
+        adjustGridSize();
+        redraw();
+    }, 100); // Adjust the debounce delay
+});
 }
 
 function draw() {
+  if (document.documentElement.scrollHeight !== height) {
+    resizeCanvas(windowWidth, document.documentElement.scrollHeight); // Resize canvas to include overflow height
+    adjustGridSize();
+  }
   background(45, 47, 48);
   drawAlignedGrid();
   applyNoiseLayer();
@@ -38,37 +53,40 @@ function draw() {
 
 function adjustGridSize() {
   gridSizeX = windowWidth / numCols;
-  gridSizeY = windowHeight / numRows;
+  gridSizeY = document.documentElement.scrollHeight / numRows;
 
+  // Adjust the number of columns based on the width
   if (gridSizeX < minGridSize) {
     numCols = max(minCols, floor(windowWidth / minGridSize));
   } else if (gridSizeX > maxGridSize) {
     numCols = max(minCols, floor(windowWidth / maxGridSize));
   }
 
+  // Adjust the number of rows based on the height
   if (gridSizeY < minGridSize) {
-    numRows = max(1, floor(windowHeight / minGridSize));
+    numRows = max(minRows, floor(document.documentElement.scrollHeight / minGridSize));
   } else if (gridSizeY > maxGridSize) {
-    numRows = max(1, floor(windowHeight / maxGridSize));
+    numRows = max(minRows, floor(document.documentElement.scrollHeight / maxGridSize));
   }
 
   gridSizeX = windowWidth / numCols;
-  gridSizeY = windowHeight / numRows;
+  gridSizeY = document.documentElement.scrollHeight / numRows;
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth, document.documentElement.scrollHeight);
   adjustGridSize();
   adjustLogoSize();
   adjustButtonPositions();
   adjustHeroContainerPosition();
+  redraw(); // Trigger redraw after resizing
 }
 
 function adjustLogoSize() {
   let logo = select('#logo');
-  let logoWidth = gridSizeX * 3;
+  let logoWidth = gridSizeX * 3; // Ensure logo takes up 3 grid cells
   logo.size(logoWidth, 'auto');
-  let logoX = (windowWidth / 2) - (logoWidth / 2);
+  let logoX = (windowWidth / 2) - (logoWidth / 2); // Center the logo
   let logoY = gridSizeY - (gridSizeY * 0.265);
   logo.position(logoX, logoY);
 }
@@ -89,37 +107,28 @@ function adjustHeroContainerPosition() {
   let heroContainer = document.querySelector('.hero-container');
 
   if (heroContainer) {
-    let gridSizeX = windowWidth / numCols; // Calculate grid size based on columns
-    let gridSizeY = windowHeight / numRows; // Calculate grid size based on rows
+      let gridSizeX = windowWidth / numCols;
+      let gridSizeY = document.documentElement.scrollHeight / numRows;
 
-    // Desktop-specific positioning (above the BREAKPOINT)
-    if (windowWidth > BREAKPOINT) {
-      let secondVerticalGridline = calcGridPos(1); // Align to the second vertical gridline from the left
-      let fourthHorizontalGridline = gridSizeY * 3; // Align to the fourth horizontal gridline from the top
+      if (windowWidth > BREAKPOINT) {
+          let secondVerticalGridline = calcGridPos(1);
+          let fourthHorizontalGridline = gridSizeY * 3.2; // Adjusted for more downward shift
 
-      // Align hero container for desktop
-      heroContainer.style.position = 'absolute';
-      heroContainer.style.left = `${secondVerticalGridline}px`; // Align to second vertical gridline
-      heroContainer.style.top = `${fourthHorizontalGridline}px`; // Align to fourth horizontal gridline
-      heroContainer.style.width = `${gridSizeX * 6}px`; // Span across a few grid columns
-      heroContainer.style.overflowY = ''; // No overflow required on desktop
-      heroContainer.style.maxHeight = ''; // Reset max height
-    }
-    // Mobile-specific positioning (below or equal to the BREAKPOINT)
-    else {
-      let firstVerticalGridline = gridSizeX; // Align to the first vertical gridline
-      let secondHorizontalGridline = gridSizeY * 1.9; // Align to the second horizontal gridline from the top
-      let lastVerticalGridline = gridSizeX * (numCols - 1); // Align to the last vertical gridline
-      let lastHorizontalGridline = gridSizeY * (numRows - 1); // Align to the first horizontal gridline from the bottom
+          heroContainer.style.position = 'absolute';
+          heroContainer.style.left = `${secondVerticalGridline}px`;
+          heroContainer.style.top = `${fourthHorizontalGridline}px`;
+          heroContainer.style.width = `${gridSizeX * 6.5}px`; // Adjusted to make it a bit narrower
+      } else {
+          let firstVerticalGridline = gridSizeX;
+          let secondHorizontalGridline = gridSizeY * 2.09; // Adjusted for a lower position on mobile
+          let lastVerticalGridline = gridSizeX * (numCols - 2); // Align to the first vertical gridline from the right
 
-      heroContainer.style.position = 'absolute';
-      heroContainer.style.left = `${firstVerticalGridline}px`; // Align to first vertical gridline
-      heroContainer.style.right = `${windowWidth - lastVerticalGridline}px`; // Align to the last vertical gridline
-      heroContainer.style.top = `${secondHorizontalGridline + gridSizeY * 0.1}px`; // Slightly below second horizontal gridline
-      heroContainer.style.bottom = `${windowHeight - lastHorizontalGridline}px`; // Align to the first horizontal gridline from the bottom
-      heroContainer.style.overflowY = 'auto'; // Enable scrolling for mobile
-      heroContainer.style.maxHeight = `${lastHorizontalGridline - secondHorizontalGridline}px`; // Set max height between the gridlines
-    }
+          heroContainer.style.position = 'absolute';
+          heroContainer.style.left = `${firstVerticalGridline}px`;
+          heroContainer.style.top = `${secondHorizontalGridline}px`;
+          heroContainer.style.width = `calc(100% - ${2 * firstVerticalGridline}px)`; // Reduced width for alignment
+          heroContainer.style.paddingBottom = '20px'; // Add padding to the bottom to avoid text ending at the window edge
+      }
   }
 }
 
@@ -135,7 +144,7 @@ function drawAlignedGrid() {
   stroke(145, 145, 145);
   for (let col = 1; col < numCols; col++) {
     let x = col * gridSizeX;
-    line(x, 0, x, height);
+    line(x, 0, x, document.documentElement.scrollHeight); // Extend vertical lines to full document height
   }
 
   for (let row = 1; row < numRows; row++) {
@@ -147,7 +156,7 @@ function drawAlignedGrid() {
 function applyNoiseLayer() {
   noStroke();
   for (let x = 0; x <= width; x += 20) {
-    for (let y = 0; y <= height; y += 20) {
+    for (let y = 0; y <= document.documentElement.scrollHeight; y += 20) {
       let noiseValue = noise(x * noiseScale, y * noiseScale, time);
       let alpha = map(noiseValue, 0, 1, -100, 255);
       let invertedAlpha = 255 - alpha;
