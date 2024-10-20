@@ -75,6 +75,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             if (currentCharIndex > maxLength) {
                 clearInterval(transitionInterval); // Stop the transition when done
+                updateCanvasAndGrid(); // Update canvas and grid after transition
             }
         }, 4);
 
@@ -121,6 +122,18 @@ window.addEventListener('DOMContentLoaded', () => {
         isAboutPage = false;
     }
 
+    function updateCanvasAndGrid() {
+        const newHeight = document.querySelector('.hero-container').offsetHeight + document.querySelector('#header').offsetHeight;
+        document.body.style.height = `${newHeight}px`;
+        resizeCanvas(window.innerWidth, newHeight);
+        adjustGridSize();
+        adjustLogoSize();
+        adjustButtonPositions();
+        adjustHeroContainerPosition();
+        document.body.style.overflowY = newHeight > window.innerHeight ? 'auto' : 'hidden';
+        redraw();
+    }
+
     // Handle desktop About/Back toggle
     aboutButton.addEventListener('click', () => {
         if (isAboutPage) {
@@ -153,6 +166,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }, 400);
         }
         adjustHamburgerContainer();
+        updateCanvasAndGrid(); // Adjust canvas and grid when window size changes
     }
 
     window.addEventListener("resize", () => {
@@ -161,4 +175,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
     checkWindowSize();
     adjustHamburgerContainer();
+    updateCanvasAndGrid(); // Ensure initial adjustment of canvas and grid
 });
