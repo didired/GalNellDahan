@@ -46,7 +46,7 @@ function draw() {
     resizeCanvas(windowWidth, document.documentElement.scrollHeight); // Resize canvas to include overflow height
     adjustGridSize();
   }
-  background(45, 47, 48);
+  background(180, 180, 180);
   drawAlignedGrid();
   applyNoiseLayer();
 }
@@ -141,7 +141,7 @@ window.addEventListener("resize", () => {
 adjustHeroContainerPosition();
 
 function drawAlignedGrid() {
-  stroke(145, 145, 145);
+  stroke(230, 230, 230);
   for (let col = 1; col < numCols; col++) {
     let x = col * gridSizeX;
     line(x, 0, x, document.documentElement.scrollHeight); // Extend vertical lines to full document height
@@ -160,7 +160,7 @@ function applyNoiseLayer() {
       let noiseValue = noise(x * noiseScale, y * noiseScale, time);
       let alpha = map(noiseValue, 0, 1, -100, 255);
       let invertedAlpha = 255 - alpha;
-      fill(45, 47, 48, invertedAlpha);
+      fill(180, 180, 180, invertedAlpha);
       rect(x, y, 40, 40);
     }
   }
