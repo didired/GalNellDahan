@@ -3,7 +3,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const hamburgerContainer = document.querySelector(".hamburger-container");
     const lines = hamburgerButton.querySelectorAll(".line"); // Get lines of hamburger button
     const heroHeader = document.querySelector('.hero-container h1');
-    const heroParagraph = document.querySelector('.hero-container p1');
+    const heroParagraph = document.querySelector('.hero-container p');
     const logo = document.getElementById("logo");
     const aboutButton = document.getElementById('about-button');
     const aboutButtonMobile = document.getElementById('about-button-mobile');
@@ -107,11 +107,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Handle "Back" button click to restore original hero text
     function handleBackClick() {
-        const originalHeader = "Autumn / Winter 25'";
+        const originalHeader = "Spring / Summer 26'";
         const originalParagraph = `
-        The A/W 2025 debut collection will be unveiled this upcoming January. Drawing inspiration from the art of subtle transformation, merging takeoffs on classic silhouettes with modern subtleties and refined craftsmanship. Designed for the seekers of individuality within understated elegance, each piece invites a closer inspection of the details that defines it.
-        `;
-
+    The SS26’ collection will be unveiled this upcoming June. Drawing inspiration from the world of servants—figures often positioned in the background, yet carrying a charged visual, physical, and social language—it moves fluidly between social classes and explores their boundaries. The collection seeks new comfort zones: spaces where one can exist more freely and humanely, moving toward the liberation of the individual from established structures through acceptance, presence, and reflection. As color plays a central role in the search for emotional safety and serves as a guiding factor in a disoriented world, the diverse silhouettes continue to be shaped by the core values of GAL NELL DAHAN: a constant search, sophistication, elegance, and a deep commitment to the human spirit.`;
+    
         animateSimultaneousTransition(heroHeader, originalHeader);
         animateSimultaneousTransition(heroParagraph, originalParagraph);
 
