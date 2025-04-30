@@ -46,7 +46,7 @@ function draw() {
     resizeCanvas(windowWidth, document.documentElement.scrollHeight); // Resize canvas to include overflow height
     adjustGridSize();
   }
-  background(180, 180, 180);
+  background(255, 255, 255);
   drawAlignedGrid();
   applyNoiseLayer();
 }
@@ -84,7 +84,7 @@ function windowResized() {
 
 function adjustLogoSize() {
   let logo = select('#logo');
-  let logoWidth = gridSizeX * 3; // Ensure logo takes up 3 grid cells
+  let logoWidth = gridSizeX * 2; // Ensure logo takes up 3 grid cells
   logo.size(logoWidth, 'auto');
   let logoX = (windowWidth / 2) - (logoWidth / 2); // Center the logo
   let logoY = gridSizeY - (gridSizeY * 0.265);
@@ -141,7 +141,7 @@ window.addEventListener("resize", () => {
 adjustHeroContainerPosition();
 
 function drawAlignedGrid() {
-  stroke(230, 230, 230);
+  stroke(240, 240, 240);
   for (let col = 1; col < numCols; col++) {
     let x = col * gridSizeX;
     line(x, 0, x, document.documentElement.scrollHeight); // Extend vertical lines to full document height
@@ -160,7 +160,7 @@ function applyNoiseLayer() {
       let noiseValue = noise(x * noiseScale, y * noiseScale, time);
       let alpha = map(noiseValue, 0, 1, -100, 255);
       let invertedAlpha = 255 - alpha;
-      fill(180, 180, 180, invertedAlpha);
+      fill(255, 255, 255, invertedAlpha);
       rect(x, y, 40, 40);
     }
   }
