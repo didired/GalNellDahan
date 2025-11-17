@@ -107,9 +107,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Handle "Back" button click to restore original hero text
     function handleBackClick() {
-        const originalHeader = "Spring / Summer 26'";
+        const originalHeader = "Autumn / Winter 26'";
         const originalParagraph = `
-    The SS26’ collection will be unveiled this upcoming June. Drawing inspiration from the world of servants—figures often positioned in the background, yet carrying a charged visual, physical, and social language—it moves fluidly between social classes and explores their boundaries. The collection seeks new comfort zones: spaces where one can exist more freely and humanely, moving toward the liberation of the individual from established structures through acceptance, presence, and reflection. As color plays a central role in the search for emotional safety and serves as a guiding factor in a disoriented world, the diverse silhouettes continue to be shaped by the core values of GAL NELL DAHAN: a constant search, sophistication, elegance, and a deep commitment to the human spirit.`;
+    The AW26 collection, which will be unveiled this January, is inspired by the Hustler — the person who keeps moving, creating, and carving out their own place in the world.<br>
+Living between the street and elevation, between the margins and the center, forever pushing forward with quiet confidence.<br><br>
+
+This season explores what power looks like today: not loud, but steady; not defined by rules, but by momentum.<br>
+AW26 captures the energy of those who work relentlessly, break limits, and shape their own reality.<br><br>
+
+With sharp contrasts, tactile fabrics, and clean, elevated silhouettes, the collection continues to reflect GAL NELL DAHAN’s core values: constant curiosity, sophistication, elegance, and a deep belief in human drive.`;
     
         animateSimultaneousTransition(heroHeader, originalHeader);
         animateSimultaneousTransition(heroParagraph, originalParagraph);
