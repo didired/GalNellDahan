@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
     const hamburgerButton = document.getElementById("hamburger-menu");
     const hamburgerContainer = document.querySelector(".hamburger-container");
-    const lines = hamburgerButton.querySelectorAll(".line"); // Get lines of hamburger button
+    const lines = hamburgerButton.querySelectorAll(".line");
     const heroHeader = document.querySelector('.hero-container h1');
     const heroParagraph = document.querySelector('.hero-container p');
     const logo = document.getElementById("logo");
@@ -11,12 +11,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     let headerInterval;
     let paragraphInterval;
-    let isAboutPage = false; // Track if currently on "About" page
+    let isAboutPage = false;
 
     function adjustHamburgerContainer() {
         hamburgerContainer.style.width = `${window.innerWidth}px`;
         hamburgerContainer.style.height = `${window.innerHeight}px`;
-        hamburgerContainer.style.zIndex = "998"; // Set z-index below X button
+        hamburgerContainer.style.zIndex = "998";
     }
 
     function toggleMenu() {
@@ -24,13 +24,12 @@ window.addEventListener('DOMContentLoaded', () => {
         if (hamburgerContainer.classList.contains("active")) {
             hamburgerContainer.classList.remove("active");
             setTimeout(() => {
-                hamburgerContainer.style.visibility = 'hidden'; // Hide after fade-out
+                hamburgerContainer.style.visibility = 'hidden';
             }, 400);
         } else {
-            hamburgerContainer.style.visibility = 'visible'; // Show before fade-in
+            hamburgerContainer.style.visibility = 'visible';
             hamburgerContainer.classList.add("active");
         }
-
         lines.forEach(line => line.classList.toggle("change-color"));
         hamburgerButton.style.zIndex = "1007";
         adjustHamburgerContainer();
@@ -38,90 +37,74 @@ window.addEventListener('DOMContentLoaded', () => {
 
     hamburgerButton.addEventListener("click", toggleMenu);
 
-    // Helper function for simultaneous text transition with stop functionality
+    // Text transition helper
     function animateSimultaneousTransition(element, newText, useHTML = false) {
         const currentText = element.textContent;
         const maxLength = Math.max(currentText.length, newText.length);
         let currentCharIndex = 0;
 
-        if (element === heroHeader) {
-            clearInterval(headerInterval);
-        } else if (element === heroParagraph) {
-            clearInterval(paragraphInterval);
-        }
+        if (element === heroHeader) clearInterval(headerInterval);
+        if (element === heroParagraph) clearInterval(paragraphInterval);
 
         const transitionInterval = setInterval(() => {
             let updatedText = '';
-
             for (let i = 0; i < maxLength; i++) {
                 const currentChar = currentText[i] || '';
                 const newChar = newText[i] || '';
-
-                if (i < currentCharIndex) {
-                    updatedText += newChar; // Replace with new character
-                } else {
-                    updatedText += currentChar; // Keep old character until transition occurs
-                }
+                updatedText += i < currentCharIndex ? newChar : currentChar;
             }
 
-            // Apply the new text with or without HTML
             if (useHTML) {
-                element.innerHTML = updatedText; // Use innerHTML for HTML content like <br>
+                element.innerHTML = updatedText;
             } else {
-                element.textContent = updatedText; // Use textContent for plain text
+                element.textContent = updatedText;
             }
 
             currentCharIndex++;
 
             if (currentCharIndex > maxLength) {
-                clearInterval(transitionInterval); // Stop the transition when done
-                updateCanvasAndGrid(); // Update canvas and grid after transition
+                clearInterval(transitionInterval);
+                updateCanvasAndGrid();
             }
         }, 4);
 
-        if (element === heroHeader) {
-            headerInterval = transitionInterval;
-        } else if (element === heroParagraph) {
-            paragraphInterval = transitionInterval;
-        }
+        if (element === heroHeader) headerInterval = transitionInterval;
+        if (element === heroParagraph) paragraphInterval = transitionInterval;
     }
 
-    // Handle "About" button click to change the hero text
+    // "About" click
     function handleAboutClick() {
         const newHeader = "About";
         const newParagraph = `
-        Gal Nell Dahan was founded by Gal Nell Dahan in 2024, drawing its inspiration from the intersection of Middle Eastern and European heritages, fusing these cultural influences into modern menswear. Fashion is an art form — a tool for self-expression to convey individuality that transcends time. Curiously exploring classic silhouettes while challenging them with modern takeoffs, Gal Nell Dahan aims to change the conventional perspective on men’s fashion, catering to men who seek both style and substance, understanding that true elegance lies in the details and expert craftsmanship.<br><br>
-        
-        By emphasizing quality over quantity and focusing on meticulously crafted pieces, Gal Nell Dahan collaborates with skilled artisans, committed to high-quality craftsmanship. This ensures each piece is as durable in essence as it is in form. This insistence on sustainable production not only brings the brand’s refined vision to life but also aligns with core values of environmental responsibility and ethical labor.
-    `;
-        // Simultaneously transition header and paragraph
-        animateSimultaneousTransition(heroHeader, newHeader);
-        animateSimultaneousTransition(heroParagraph, newParagraph, true); // Use innerHTML for paragraph
+Gal Nell Dahan was founded by Gal Nell Dahan in 2024, drawing its inspiration from the intersection of Middle Eastern and European heritages, fusing these cultural influences into modern menswear. Fashion is an art form — a tool for self-expression to convey individuality that transcends time. Curiously exploring classic silhouettes while challenging them with modern takeoffs, Gal Nell Dahan aims to change the conventional perspective on men’s fashion, catering to men who seek both style and substance, understanding that true elegance lies in the details and expert craftsmanship.<br><br>
 
-        // Change button text to "Back" on desktop
+By emphasizing quality over quantity and focusing on meticulously crafted pieces, Gal Nell Dahan collaborates with skilled artisans, committed to high-quality craftsmanship. This ensures each piece is as durable in essence as it is in form. This insistence on sustainable production not only brings the brand’s refined vision to life but also aligns with core values of environmental responsibility and ethical labor.
+        `;
+        animateSimultaneousTransition(heroHeader, newHeader);
+        animateSimultaneousTransition(heroParagraph, newParagraph, true); // innerHTML enabled
+
         aboutButton.textContent = "Back";
-        aboutButton.style.fontWeight = "700"; // Make it bold
-        aboutButtonMobile.textContent = "Back"; // Change mobile button text to "Back"
+        aboutButton.style.fontWeight = "700";
+        aboutButtonMobile.textContent = "Back";
         isAboutPage = true;
     }
 
-    // Handle "Back" button click to restore original hero text
+    // "Back" click
     function handleBackClick() {
         const originalHeader = "Autumn / Winter 26'";
         const originalParagraph = `
-    The AW26 collection, which will be unveiled this January, is inspired by the Hustler — the person who keeps moving, creating, and carving out their own place in the world. Living between the street and elevation, between the margins and the center, forever pushing forward with quiet confidence.<br><br>
+The AW26 collection, which will be unveiled this January, is inspired by the Hustler — the person who keeps moving, creating, and carving out their own place in the world. Living between the street and elevation, between the margins and the center, forever pushing forward with quiet confidence.<br><br>
 
 This season explores what power looks like today: not loud, but steady; not defined by rules, but by momentum. AW26 captures the energy of those who work relentlessly, break limits, and shape their own reality.<br><br>
 
-With sharp contrasts, tactile fabrics, and clean, elevated silhouettes, the collection continues to reflect GAL NELL DAHAN’s core values: constant curiosity, sophistication, elegance, and a deep belief in human drive.`;
-    
+With sharp contrasts, tactile fabrics, and clean, elevated silhouettes, the collection continues to reflect GAL NELL DAHAN’s core values: constant curiosity, sophistication, elegance, and a deep belief in human drive.
+        `;
         animateSimultaneousTransition(heroHeader, originalHeader);
-        animateSimultaneousTransition(heroParagraph, originalParagraph);
+        animateSimultaneousTransition(heroParagraph, originalParagraph, true); // innerHTML enabled
 
-        // Change button text back to "About"
         aboutButton.textContent = "About";
-        aboutButton.style.fontWeight = "500"; // Normal weight
-        aboutButtonMobile.textContent = "About"; // Change mobile button back to "About"
+        aboutButton.style.fontWeight = "500";
+        aboutButtonMobile.textContent = "About";
         isAboutPage = false;
     }
 
@@ -137,26 +120,17 @@ With sharp contrasts, tactile fabrics, and clean, elevated silhouettes, the coll
         redraw();
     }
 
-    // Handle desktop About/Back toggle
     aboutButton.addEventListener('click', () => {
-        if (isAboutPage) {
-            handleBackClick();
-        } else {
-            handleAboutClick();
-        }
+        if (isAboutPage) handleBackClick();
+        else handleAboutClick();
     });
 
-    // Handle mobile About/Back toggle and close menu
     aboutButtonMobile.addEventListener('click', () => {
-        if (isAboutPage) {
-            handleBackClick();
-        } else {
-            handleAboutClick();
-        }
-        toggleMenu(); // Close the hamburger menu
+        if (isAboutPage) handleBackClick();
+        else handleAboutClick();
+        toggleMenu();
     });
 
-    // Logo click restores original text
     logo.addEventListener('click', handleBackClick);
 
     function checkWindowSize() {
@@ -164,19 +138,15 @@ With sharp contrasts, tactile fabrics, and clean, elevated silhouettes, the coll
             hamburgerContainer.classList.remove("active");
             hamburgerButton.classList.remove("open");
             lines.forEach(line => line.classList.remove("change-color"));
-            setTimeout(() => {
-                hamburgerContainer.style.visibility = 'hidden';
-            }, 400);
+            setTimeout(() => { hamburgerContainer.style.visibility = 'hidden'; }, 400);
         }
         adjustHamburgerContainer();
-        updateCanvasAndGrid(); // Adjust canvas and grid when window size changes
+        updateCanvasAndGrid();
     }
 
-    window.addEventListener("resize", () => {
-        checkWindowSize();
-    });
+    window.addEventListener("resize", checkWindowSize);
 
     checkWindowSize();
     adjustHamburgerContainer();
-    updateCanvasAndGrid(); // Ensure initial adjustment of canvas and grid
+    updateCanvasAndGrid();
 });
