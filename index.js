@@ -109,11 +109,9 @@ window.addEventListener('DOMContentLoaded', () => {
     function handleBackClick() {
         const originalHeader = "Autumn / Winter 26'";
         const originalParagraph = `
-    The AW26 collection, which will be unveiled this January, is inspired by the Hustler — the person who keeps moving, creating, and carving out their own place in the world.<br>
-Living between the street and elevation, between the margins and the center, forever pushing forward with quiet confidence.<br><br>
+    The AW26 collection, which will be unveiled this January, is inspired by the Hustler — the person who keeps moving, creating, and carving out their own place in the world. Living between the street and elevation, between the margins and the center, forever pushing forward with quiet confidence.<br><br>
 
-This season explores what power looks like today: not loud, but steady; not defined by rules, but by momentum.<br>
-AW26 captures the energy of those who work relentlessly, break limits, and shape their own reality.<br><br>
+This season explores what power looks like today: not loud, but steady; not defined by rules, but by momentum. AW26 captures the energy of those who work relentlessly, break limits, and shape their own reality.<br><br>
 
 With sharp contrasts, tactile fabrics, and clean, elevated silhouettes, the collection continues to reflect GAL NELL DAHAN’s core values: constant curiosity, sophistication, elegance, and a deep belief in human drive.`;
     
